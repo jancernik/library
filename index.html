@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Material+Icons+Round"
+    />
+    <title>Library</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Book Library</h1>
+      <div class="books-library">
+        <div class="book-card">
+          <div class="title">
+            <h3>The Hobbit</h3>
+          </div>
+          <div class="author">
+            <span class="material-icons-round"> person </span>
+            <p>J. R. R. Tolkien</p>
+          </div>
+          <div class="pages">
+            <span class="material-icons-round"> library_books </span>
+            <p>309 pages</p>
+          </div>
+          <div id="state">
+            <button id="change-state">
+              <span class="material-icons-round"> done </span>
+              <!-- <span class="material-icons-round"> close </span> -->
+              Read
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="add-book">
+        <button class="add" type="button">
+          <span class="material-icons-round"> add </span>
+          Add book
+        </button>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>

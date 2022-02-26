@@ -1,0 +1,126 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@500&display=swap');
+
+:root {
+    --font-color: #f0f0f0;
+    --accent-color: #5c5470;
+    --lighter-background-color: #352f44;
+    --darker-background-color: #2a2438;
+
+    --button-hover-color: #4b445c;
+    --button-active-color: #bd7018;
+
+    --outer-corner-radius: 3vh;
+    --card-corner-radius: 10px;
+    --outer-space: 10vh;
+}
+
+body {
+  background: var(--darker-background-color);
+  color: var(--font-color);
+  font-family: 'Assistant', sans-serif;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+p, h1, h3, body, span {
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: calc( 100vh - var(--outer-space));
+  width: calc( 100vw - var(--outer-space));
+  background: var(--lighter-background-color);
+  border-radius: var(--outer-corner-radius);
+  box-shadow: 0 0 calc(var(--outer-space)/2) rgba(0, 0, 0, 0.3);
+  padding: 20px;
+}
+
+.books-library {
+  display: flex;
+}
+
+.book-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--accent-color);
+  gap: 15px;
+  border-radius: var(--card-corner-radius);
+  top: 0;
+  transition: ease 0.2s;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+}
+
+/* .book-card:hover{
+  scale: 1.05;
+  } */
+
+.book-card > div {
+  display: flex;
+  gap: 8px;
+  padding: 0 15px ;
+}
+
+.title, .state {
+  justify-content: center;
+}
+
+.add {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4em 1em;
+  background: var(--accent-color);
+  border: 0;
+  color: var(--font-color);
+  font-size: 1.05rem;
+  border-radius: var(--card-corner-radius);
+  margin: 10px;
+  transition: ease 0.2s;
+}
+
+button:hover{
+  background: var(--button-hover-color);
+}
+
+.add:active {
+  background: var(--button-active-color);
+  box-shadow: inset 0 0 6px black;
+}
+  
+#state {
+  padding: 0;
+}
+
+#change-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: green;
+  border: 0;
+  color: var(--font-color);
+  font-size: 1.05rem;
+  border-radius: 0 0 var(--card-corner-radius) var(--card-corner-radius);
+  transition: ease 0.2s;
+  width: 100%;
+  height: 100%;
+}
+
+#change-state:hover {
+  background: var(--button-hover-color);
+}
+
+.add:active {
+  background: var(--button-active-color);
+  box-shadow: inset 0 0 6px black;
+}
+/* span {
+  font-size: 30px !important;
+} */
