@@ -5,44 +5,27 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Material+Icons+Round"
-    />
-    <title>Library</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons+Round"/>
+    <script src="https://cdn.jsdelivr.net/gh/JnaCer/floating-github-link@main/github-link.js"></script>
+    <title>book library</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
   </head>
   <body>
-    <div class="container">
-      <h1>Book Library</h1>
-      <div class="books-library">
-        <div class="book-card">
-          <div class="title">
-            <h3>The Hobbit</h3>
-          </div>
-          <div class="author">
-            <span class="material-icons-round"> person </span>
-            <p>J. R. R. Tolkien</p>
-          </div>
-          <div class="pages">
-            <span class="material-icons-round"> library_books </span>
-            <p>309 pages</p>
-          </div>
-          <div id="state">
-            <button id="change-state">
-              <span class="material-icons-round"> done </span>
-              <!-- <span class="material-icons-round"> close </span> -->
-              Read
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="add-book">
-        <button class="add" type="button">
-          <span class="material-icons-round"> add </span>
-          Add book
-        </button>
-      </div>
+    <div class="sidebar">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+      </svg>
+      <h1>book library</h1>
+      <button class="add-book">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+          <line x1="12" y1="5" x2="12" y2="19"></line>
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+        </svg>
+      </button>
     </div>
+    <div class="books-grid"></div>
+    <a href="https://github.com/JnaCer/floating-github-link" class="github-link white-icon"></a>
     <script src="script.js"></script>
   </body>
 </html>

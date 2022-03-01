@@ -1,126 +1,144 @@
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=Source+Sans+Pro:ital,wght@1,600;1,900&display=swap');
 
 :root {
-    --font-color: #f0f0f0;
-    --accent-color: #5c5470;
-    --lighter-background-color: #352f44;
-    --darker-background-color: #2a2438;
-
-    --button-hover-color: #4b445c;
-    --button-active-color: #bd7018;
-
-    --outer-corner-radius: 3vh;
-    --card-corner-radius: 10px;
-    --outer-space: 10vh;
+  --background-color: #121212;
+  --font-color: #ffffff;
+  --accent-color: #5c5470;
+  --sidebar-content-size: 2rem;
+  --sidebar-content-spacing: 1rem;
+  --card-corner-radius: 0rem;
+  --card-padding: 2rem;
+  --delete-button-size: 2rem;
+  --book-grid-spacing: 2rem;
 }
-
-body {
-  background: var(--darker-background-color);
-  color: var(--font-color);
-  font-family: 'Assistant', sans-serif;
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
-}
-
-p, h1, h3, body, span {
+* {
+  font-family: 'Lato', sans-serif;
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-.container {
+body{
+  background: var(--background-color);
+  color: var(--font-color);
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: calc( 100vh - var(--outer-space));
-  width: calc( 100vw - var(--outer-space));
-  background: var(--lighter-background-color);
-  border-radius: var(--outer-corner-radius);
-  box-shadow: 0 0 calc(var(--outer-space)/2) rgba(0, 0, 0, 0.3);
-  padding: 20px;
+  height: 100vh;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  margin-left: calc(var(--sidebar-content-size) + calc(var(--sidebar-content-spacing) * 2));
 }
 
-.books-library {
+svg {
+  width: var(--sidebar-content-size);
+  height: var(--sidebar-content-size);
+  stroke: currentColor;
+  stroke-width: 1.8;
+  transition: ease-in-out 300ms;
+  cursor: pointer;
+}
+
+.sidebar {
   display: flex;
+  flex-direction: column;
+  gap: var(--sidebar-content-spacing);
+  padding: var(--sidebar-content-spacing);
+  background: rgba(255, 255, 255, 0.05);
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+.sidebar > h1 {
+  writing-mode: vertical-lr;
+  white-space: nowrap;
+  font-size: var(--sidebar-content-size);
+  font-weight: 400;
+}
+
+.books-grid {
+  display: grid;
+  width: 100%;
+  grid-template-rows: repeat(2, auto-fit);
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  padding: var(--book-grid-spacing);
+  gap: var(--book-grid-spacing);
 }
 
 .book-card {
   position: relative;
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   background: var(--accent-color);
-  gap: 15px;
   border-radius: var(--card-corner-radius);
-  top: 0;
-  transition: ease 0.2s;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.08);
+  padding-bottom: calc(var(--card-padding) / 2);
 }
 
-/* .book-card:hover{
-  scale: 1.05;
-  } */
+h3 {
+  text-align: center;
+  font-weight: 300;
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+  padding: var(--card-padding) calc( var(--card-padding) / 2) 0 calc( var(--card-padding) / 2);
+}
 
-.book-card > div {
+.author, .pages {
+  font-size: 1.1rem;
   display: flex;
-  gap: 8px;
-  padding: 0 15px ;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0 var(--card-padding);
+}
+.author::before {
+  display: flex;
+  content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>');
+}
+.pages::before {
+  display: flex;
+  content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>');
 }
 
-.title, .state {
-  justify-content: center;
+button {
+  height: var(--delete-button-size);
+  width: var(--delete-button-size);
 }
 
-.add {
+.read-state {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.4em 1em;
-  background: var(--accent-color);
-  border: 0;
-  color: var(--font-color);
-  font-size: 1.05rem;
-  border-radius: var(--card-corner-radius);
-  margin: 10px;
-  transition: ease 0.2s;
-}
-
-button:hover{
-  background: var(--button-hover-color);
-}
-
-.add:active {
-  background: var(--button-active-color);
-  box-shadow: inset 0 0 6px black;
-}
-  
-#state {
-  padding: 0;
-}
-
-#change-state {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: green;
-  border: 0;
-  color: var(--font-color);
-  font-size: 1.05rem;
-  border-radius: 0 0 var(--card-corner-radius) var(--card-corner-radius);
-  transition: ease 0.2s;
   width: 100%;
-  height: 100%;
+  border: 0;
+  background: none;
+  font-size: 1.1rem;
+  padding: 1.4rem;
+  color: #fff;
+  margin-top: calc(var(--card-padding) / 2);
+  background: rgba(255, 255, 255, 0.05);
 }
 
-#change-state:hover {
-  background: var(--button-hover-color);
+.delete-card {
+  position: absolute;
+  height: var(--delete-button-size);
+  width: var(--delete-button-size);
+  top: 0;
+  right: 0;
+  border: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>');
+  background-position: center; 
 }
 
-.add:active {
-  background: var(--button-active-color);
-  box-shadow: inset 0 0 6px black;
+.add-book {
+  position: absolute;
+  width: 100%;
+  height: calc(var(--sidebar-content-size) + calc(var(--sidebar-content-spacing) * 2));
+  left: 0;
+  bottom: 0;
+  background: none;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
 }
-/* span {
-  font-size: 30px !important;
-} */

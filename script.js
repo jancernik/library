@@ -11,24 +11,38 @@
 // const book1 = new Book ("The Hobbit", "J. R. R. Tolkien", 304, "not read yet");
 // console.log(book1.info());
 
-//title, author, pages, readState
+const addBook = document.querySelector(".add-book");
+addBook.addEventListener("click", () => {
+  createBookCard("dummy title", "dummy author", "dummy pages", "dummy state")
+});
 
+const booksGrid = document.querySelector(".books-grid");
 
-function createBookCard () {
-  const booksLibrary = document.querySelector(".books-library");
+function createBookCard(titleData, authorData, pagesData, readStateData) {
   const bookCard = document.createElement("div");
-  bookCard.setAttribute("class", "book-card")
-  booksLibrary.append(bookCard);
-  const title = document.createElement("div");
-  title.setAttribute("class", "title")
+  bookCard.setAttribute("class", "book-card");
+  booksGrid.append(bookCard);
+
+  const title = document.createElement("h3");
+  title.textContent = titleData;
   bookCard.append(title);
-  const author = document.createElement("div");
-  author.setAttribute("class", "author")
+
+  const author = document.createElement("p");
+  author.setAttribute("class", "author");
+  author.textContent = authorData;
   bookCard.append(author);
-  const pages = document.createElement("div");
-  pages.setAttribute("class", "pages")
+
+  const pages = document.createElement("p");
+  pages.setAttribute("class", "pages");
+  pages.textContent = `${pagesData} pages`;
   bookCard.append(pages);
-  const state = document.createElement("div");
-  state.setAttribute("id", "state")
-  bookCard.append(state);
+
+  const readState = document.createElement("button");
+  readState.setAttribute("class", "read-state");
+  readState.textContent = readStateData;
+  bookCard.append(readState);
+
+  const deleteCard = document.createElement("button");
+  deleteCard.setAttribute("class", "delete-card");
+  bookCard.append(deleteCard);
 }
