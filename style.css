@@ -11,6 +11,7 @@
   --delete-button-size: 2rem;
   --book-grid-spacing: 2rem;
 }
+
 * {
   font-family: 'Lato', sans-serif;
   box-sizing: border-box;
@@ -44,11 +45,12 @@ svg {
   flex-direction: column;
   gap: var(--sidebar-content-spacing);
   padding: var(--sidebar-content-spacing);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgb(30, 30, 30);
   height: 100%;
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 15;
 }
 .sidebar > h1 {
   writing-mode: vertical-lr;
@@ -95,10 +97,12 @@ h3 {
 .author::before {
   display: flex;
   content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>');
+  z-index: -1;
 }
 .pages::before {
   display: flex;
   content: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>');
+  z-index: -1;
 }
 
 button {
@@ -120,7 +124,15 @@ button {
   background: rgba(255, 255, 255, 0.05);
 }
 
-.delete-card {
+.read-state.read {
+  background: #5c5470;
+}
+
+.read-state.not-read {
+  background: #310b91;
+}
+
+.delete-card, .close-modal {
   position: absolute;
   height: var(--delete-button-size);
   width: var(--delete-button-size);
@@ -129,6 +141,11 @@ button {
   border: 0;
   background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1.5em" height="1.5em" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.7"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>');
   background-position: center; 
+  cursor: pointer;
+  transition: 300ms ease-in-out;
+}
+.delete-card:hover {
+  background-color: rgba(255, 0, 0, 0.5);
 }
 
 .add-book {
@@ -141,4 +158,123 @@ button {
   border: 0;
   color: #fff;
   cursor: pointer;
+}
+.add-book-hover {
+  font-size: 1.3em;
+  font-weight: 400;
+  position: fixed;
+  bottom: var(--sidebar-content-spacing);
+  left: calc(var(--sidebar-content-size) + calc(var(--sidebar-content-spacing) * 2));
+  background-color: rgb(45, 45, 45);
+  transition: 300ms ease-in-out;
+  transform: translate(-100%);
+  z-index: 10;
+  padding: calc(var(--sidebar-content-spacing) / 2) var(--sidebar-content-spacing);
+  cursor: pointer;
+}
+
+.add-book-hover.active {
+ transform: translate(0);
+}
+
+.modal {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 100% );
+  background: rgb(28, 28, 28);
+  transition: 300ms ease-in-out;
+  z-index: 40;
+}
+
+.modal > form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  padding-bottom: calc(var(--card-padding) / 2);
+}
+
+input{
+  font-size: 1.1rem;
+  padding: 0 var(--card-padding);
+  margin: 0 var(--card-padding);
+  background: rgba(255, 255, 255, 0.05);
+  border: 0;
+  color: #fff;
+  height: 2.5rem;
+}
+
+.checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0 var(--card-padding);
+}
+
+label {
+  font-size: 1.1rem;
+}
+
+
+.modal > form > button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 0;
+  background: none;
+  font-size: 1.1rem;
+  padding: 1.4rem;
+  color: #fff;
+  margin-top: calc(var(--card-padding) / 2);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.modal.active {
+  transform: translate(-50%, 0%);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+#overlay, #light-overlay {
+  position: fixed;
+  opacity: 0;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  pointer-events: none;
+  transition: 300ms ease-in-out;
+  z-index: 20;
+}
+
+#light-overlay {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: calc(var(--sidebar-content-size) + calc(var(--sidebar-content-spacing) * 2));;
+  z-index: 5;
+}
+
+#overlay.active,
+#light-overlay.active {
+  pointer-events: all;
+  opacity: 1;
+}
+
+
+@keyframes fadeIn {
+  from {
+      opacity: 0;
+  }
+  to {
+      opacity: 1;
+  }
+}
+
+.fade-in{
+  animation: fadeIn 0.5s forwards;
 }

@@ -7,14 +7,16 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons+Round"/>
     <script src="https://cdn.jsdelivr.net/gh/JnaCer/floating-github-link@main/github-link.js"></script>
-    <title>book library</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <title>book library</title>
   </head>
   <body>
     <div class="sidebar">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
         <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+        <path
+          d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+        ></path>
       </svg>
       <h1>book library</h1>
       <button class="add-book">
@@ -24,8 +26,25 @@
         </svg>
       </button>
     </div>
+    <div class="add-book-hover">add book</div>
+    <div id="light-overlay"></div>
     <div class="books-grid"></div>
-    <a href="https://github.com/JnaCer/floating-github-link" class="github-link white-icon"></a>
+    <div class="modal" id="modal">
+      <form id="add-book-form">
+        <h3>New book info</h3>
+        <input required type="text" id="title-input" placeholder="Title" />
+        <input required type="text" id="author-input" placeholder="Author" />
+        <input required type="number" id="pages-input" min="1" placeholder="Pages" />
+        <div class="checkbox">
+          <label for="read-status">Have you read it?</label>
+          <input type="checkbox" id="read-status" />
+        </div>
+        <button type="submit">Add book</button>
+      </form>
+      <button type="button" class="close-modal"></button>
+    </div>
+    <div id="overlay"></div>
+    <a href="https://github.com/JnaCer/floating-github-link" class="github-link white-icon" style="z-index: 60"></a>
     <script src="script.js"></script>
   </body>
 </html>
