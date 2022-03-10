@@ -1,12 +1,5 @@
 const booksGrid = document.querySelector(".books-grid");
-const openModalButton = document.querySelector(".add-book");
-const openModalHover = document.querySelector(".add-book-hover");
-const closeModalButton = document.querySelector(".close-modal");
-const addBookModal = document.querySelector(".modal");
-const overlay = document.getElementById("overlay");
-const lightOverlay = document.getElementById("light-overlay");
-const addBookForm = document.getElementById("add-book-form");
-const deleteCardButton = document.querySelectorAll(".deleteCard");
+const addBookToStorageModal = document.querySelector(".modal");
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -15,83 +8,56 @@ function Book(title, author, pages, read) {
   this.read = read;
 }
 
-class Store {
-  static getBooks() {
-    let books;
-    if (localStorage.getItem("books") === null) {
-      books = [];
-    } else {
-      books = JSON.parse(localStorage.getItem("books"));
+function getBooksFromStorage() {
+  let books;
+  if (localStorage.getItem("books") === null) {
+    books = [];
+  } else {
+    books = JSON.parse(localStorage.getItem("books"));
+  }
+  return books;
+}
+
+function addBookToStorage(book) {
+  const books = getBooksFromStorage();
+  books.push(book);
+  localStorage.setItem("books", JSON.stringify(books));
+}
+
+function removeBookFromStorage(bookTitle) {
+  const books = getBooksFromStorage();
+  books.forEach((book, index) => {
+    if (book.title === bookTitle) {
+      books.splice(index, 1);
     }
-    return books;
-  }
+  });
+  localStorage.setItem("books", JSON.stringify(books));
+}
 
-  static addBook(book) {
-    const books = Store.getBooks();
-    books.push(book);
-    localStorage.setItem("books", JSON.stringify(books));
-  }
-
-  static removeBook() {
-    const books = Store.getBooks();
-    localStorage.setItem("books", JSON.stringify(books));
-  }
+function toggleReadState(bookTitle, targetButton) {
+  const books = getBooksFromStorage();
+  books.forEach((book, index) => {
+    if (book.title === bookTitle) {
+      if (books[index].read) {
+        targetButton.classList.add("not-read");
+        targetButton.classList.remove("read");
+        targetButton.textContent = "Not read yet";
+      } else {
+        targetButton.classList.add("read");
+        targetButton.classList.remove("not-read");
+        targetButton.textContent = "Already read";
+      }
+      books[index].read = !books[index].read;
+    }
+  });
+  localStorage.setItem("books", JSON.stringify(books));
 }
 
 function displayBooks() {
-  const books = Store.getBooks();
+  const books = getBooksFromStorage();
   books.forEach((book) => {
     createBookCard(book);
   });
-}
-
-booksGrid.addEventListener("click", (e) => {
-  const books = Store.getBooks();
-  const bookTitle = e.target.closest("div").firstChild.innerText;
-  if (e.target.classList.contains("delete-card")) {
-    e.target.parentElement.remove();
-    books.forEach((book, index) => {
-      books.splice(index, 1);
-    });
-  }
-  if (e.target.classList.contains("read-state")) {
-    books.forEach((book, index) => {
-      if (book.title === bookTitle) {
-        if (books[index].read) {
-          books[index].read = false;
-          e.target.classList.add("not-read");
-          e.target.classList.remove("read");
-          e.target.textContent = "Not read yet";
-        } else {
-          books[index].read = true;
-          e.target.classList.add("read");
-          e.target.classList.remove("not-read");
-          e.target.textContent = "Already read";
-        }
-      }
-    });
-  }
-  localStorage.setItem("books", JSON.stringify(books));
-});
-
-document.addEventListener("DOMContentLoaded", displayBooks());
-
-addBookForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const title = document.querySelector("#title-input").value;
-  const author = document.querySelector("#author-input").value;
-  const pages = document.querySelector("#pages-input").value;
-  const read = document.querySelector("#read-status").checked;
-  const book = new Book(title, author, pages, read);
-  Store.addBook(book);
-  createBookCard(book);
-});
-
-function clearForm() {
-  document.querySelector("#title-input").value = "";
-  document.querySelector("#author-input").value = "";
-  document.querySelector("#pages-input").value = "";
-  document.querySelector("#read-status").checked = false;
 }
 
 function createBookCard(book) {
@@ -125,6 +91,42 @@ function createBookCard(book) {
   bookCard.append(deleteCard);
 }
 
+booksGrid.addEventListener("click", (e) => {
+  const bookTitle = e.target.closest("div").firstChild.innerText;
+  if (e.target.classList.contains("delete-card")) {
+    removeBookFromStorage(bookTitle);
+    e.target.parentElement.remove();
+  } else if (e.target.classList.contains("read-state")) {
+    toggleReadState(bookTitle, e.target);
+  }
+});
+
+document.getElementById("add-book-form").addEventListener("submit", (e) => {
+  e.preventDefault();
+  const title = document.querySelector("#title-input").value;
+  const author = document.querySelector("#author-input").value;
+  const pages = document.querySelector("#pages-input").value;
+  const read = document.querySelector("#read-status").checked;
+  const book = new Book(title, author, pages, read);
+  addBookToStorage(book);
+  createBookCard(book);
+  closeModal();
+  localStorage.setItem("books", JSON.stringify(books));
+});
+
+function clearForm() {
+  document.querySelector("#title-input").value = "";
+  document.querySelector("#author-input").value = "";
+  document.querySelector("#pages-input").value = "";
+  document.querySelector("#read-status").checked = false;
+}
+
+const overlay = document.getElementById("overlay");
+const lightOverlay = document.getElementById("light-overlay");
+const closeModalButton = document.querySelector(".close-modal");
+const openModalButton = document.querySelector(".add-book");
+const openModalHover = document.querySelector(".add-book-hover");
+
 [openModalButton, openModalHover].forEach((item) => {
   item.addEventListener("click", () => {
     openModal();
@@ -137,20 +139,19 @@ function createBookCard(book) {
   });
 });
 
-closeModalButton.addEventListener("click", () => {
-  closeModal();
-});
-overlay.addEventListener("click", () => {
-  closeModal();
+[closeModalButton, overlay].forEach((item) => {
+  item.addEventListener("click", () => {
+    closeModal();
+  });
 });
 
 function openModal() {
-  addBookModal.classList.add("active");
+  addBookToStorageModal.classList.add("active");
   overlay.classList.add("active");
 }
 
 function closeModal() {
-  addBookModal.classList.remove("active");
+  addBookToStorageModal.classList.remove("active");
   overlay.classList.remove("active");
   setTimeout(clearForm, 300);
 }
@@ -159,3 +160,19 @@ function toggleHoverElements(action) {
   openModalHover.classList[action]("active");
   lightOverlay.classList[action]("active");
 }
+
+let root = document.documentElement;
+const logo = document.getElementById("logo");
+logo.addEventListener("click", () => {
+  const randomColor = Math.floor(Math.random() * 16777215).toString(16);
+  const secondRandomColor = invertHex(randomColor);
+  root.style.setProperty("--accent-color", `#${randomColor}`);
+  root.style.setProperty("--second-accent-color", `#${secondRandomColor}`);
+});
+
+function invertHex(hex) {
+  return (Number(`0x1${hex}`) ^ 0xFFFFFF).toString(16).substr(1).toUpperCase()
+}
+
+document.addEventListener("DOMContentLoaded", displayBooks());
+

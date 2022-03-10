@@ -3,7 +3,8 @@
 :root {
   --background-color: #121212;
   --font-color: #ffffff;
-  --accent-color: #5c5470;
+  --accent-color: #26AD90;
+  --second-accent-color: #F55175;
   --sidebar-content-size: 2rem;
   --sidebar-content-spacing: 1rem;
   --card-corner-radius: 0rem;
@@ -125,11 +126,11 @@ button {
 }
 
 .read-state.read {
-  background: #5c5470;
+  background: var(--accent-color);
 }
 
 .read-state.not-read {
-  background: #310b91;
+  background: var(--second-accent-color);
 }
 
 .delete-card, .close-modal {
@@ -278,3 +279,7 @@ form {
 .fade-in{
   animation: fadeIn 0.5s forwards;
 }
+
+/* 094D3E
+FFAE03
+2E294E*/
